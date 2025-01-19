@@ -8,14 +8,16 @@ app = Flask(__name__)
 def index():
     weather = None
     error_message = None  # Для хранения сообщения об ошибке
+    news = None
 
     if request.method == 'POST':
         city = request.form.get('city')
         weather = get_weather(city)
+        news = get_news()
         if weather is None:
             error_message = 'Город не найден. Попробуйте еще раз.'
 
-    return render_template('index.html', weather=weather, error_message=error_message)
+    return render_template('index.html', weather=weather, error_message=error_message, news=news)
 
 
 def get_weather(city):
@@ -37,6 +39,11 @@ def get_weather(city):
         print(f'Other error occurred: {err}')
         return None
 
+def get_news():
+    api_key = '25ccf200a52747c89e874e470d1a3a89'
+    url = f'https://newsapi.org/v2/top-headlines?country=us&apiKey={api_key}'
+    response = requests.get(url)
+    return response.json().get('articles', [])
 
 if __name__ == '__main__':
     app.run()

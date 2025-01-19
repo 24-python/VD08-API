@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Сайт с прогнозом погоды в любой точке мира</h1>
+
+        <!-- Вывод сообщения об ошибке -->
+        {% if error_message %}
+            <div class="alert alert-danger text-center">
+                {{ error_message }}
+            </div>
+        {% endif %}
+
+        <form action="/" method="post" class="mb-4">
+            <div class="form-row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <input type="text" name="city" class="form-control mb-2" placeholder="Введите город" required>
+                </div>
+                <div class="col-auto">
+                    <input type="submit" class="btn btn-primary mb-2" value="Узнать погоду">
+                </div>
+            </div>
+        </form>
+
+        <div class="weather text-center">
+            {% if weather %}
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">Погода в {{ weather['name'] }}</h2>
+                    <p class="card-text">Температура: {{ weather['main']['temp'] }}°C</p>
+                    <p class="card-text">Погода: {{ weather['weather'][0]['description'] }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Подключение jQuery и Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
